@@ -27,10 +27,8 @@ def consumer_run():
             schema.pop("type", None)
             schema.pop("_id", None)
             if types == "customer":
-                print(value)
                 insert_customer(schema)
             elif types == "order":
-                print(value)
                 insert_order(schema)
             else:
                 print("Invalid message type")
