@@ -1,18 +1,44 @@
 import json
+from time import sleep
+from confluent_kafka import Producer
+
+from mongo_connection import get_n_documents
+
+from congif import settings, kafka_producer_config
+
+producer = Producer(kafka_producer_config.model_dump(by_alias=True))
+
+
+def serialize_doc(doc: dict):
+    if doc and "_id" in doc:
+        doc["_id"] = doc["_id"].__str__()
+    return doc
+
+
+def serialize_docs(docs: list[dict]):
+    return [serialize_doc(doc) for doc in docs]
 
 
 def process_seed_data():
-    print("Starting background seed...")
-    try:
-        with open("users_with_posts.json", "r") as f:
-            users = json.load(f)
-            for user in users:
-                try:
-                    value = json.dumps(user).encode("utf-8")
-                    send_user(producer, value)
-                    print(f"Sent user: {user.get('email')}")
-                    sleep(5)
-                except Exception as e:
-                    print(f"Error sending user: {e}")
-    except Exception as e:
-        print(f"File error: {e}")
+    while True:
+        documents = get_n_documents(30)
+        if not documents:
+            break
+        documents = serialize_docs(documents)
+        for document in documents:
+            try:
+
+                value = json.dumps(document).encode("utf-8")
+                send_document(value)
+                sleep(0.5)
+            except Exception as e:
+                print(f"Error sending document: {e}")
+    print("Data sent successfully.")
+
+
+def send_document(value):
+    producer.produce(
+        topic=settings.KAFKA_TOPIC,
+        value=value,
+    )
+    producer.flush()
