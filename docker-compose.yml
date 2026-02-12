@@ -81,6 +81,7 @@ services:
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       BOOTSTRAP_SERVERS: kafka:29092
 
+
       MYSQL_HOST: mysql
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_USER: root
