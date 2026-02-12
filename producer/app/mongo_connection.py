@@ -23,5 +23,5 @@ def insert_data_from_json(file_path):
         print(f"Error inserting data: {e}")
 
 
-def get_n_documents(n):
-    return collection.find().limit(n)
+def get_n_documents(t,s,l):
+    return collection.find({"type":t}).sort(f"{t}Number").skip(s).limit(l).to_list(length=30)
