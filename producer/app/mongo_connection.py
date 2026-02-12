@@ -2,10 +2,13 @@ import json
 
 from pymongo import MongoClient
 
-mongodb_client = MongoClient("mongodb://localhost:27017/")
+from congif import mongo_config
+
+mongodb_client = MongoClient(mongo_config.MONGODB_URL)
 db = mongodb_client["test"]
 collection = db["wekk_17_exem"]
 collection.drop()
+
 
 def insert_data_from_json(file_path):
     try:
