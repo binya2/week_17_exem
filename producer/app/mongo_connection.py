@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from pymongo import MongoClient
 
@@ -12,6 +13,7 @@ collection.drop()
 
 def insert_data_from_json(file_path):
     try:
+        file_path = Path(__file__).resolve().parent / file_path
         with open(file_path, "r") as f:
             data = json.load(f)
             if isinstance(data, list):
