@@ -63,6 +63,7 @@ services:
     environment:
       KAFKA_BROKER: kafka:29092
       KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+
       MONGODB_URL: mongodb://mongo:27017
     networks:
       - app-network
@@ -92,7 +93,8 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       MYSQL_HOST: mysql
       MYSQL_ROOT_PASSWORD: root_password
