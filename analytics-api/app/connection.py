@@ -1,7 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 
-from consumer.app.congif import mysql_config
+from congif import mysql_config
 
 
 def get_db_connection():
