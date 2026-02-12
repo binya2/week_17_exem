@@ -64,6 +64,10 @@ def init_db():
 def insert_order(order):
     connection = get_db_connection()
     cursor = connection.cursor()
+    if get_orders_by_order_number(order['orderNumber']):
+        return print(f"Order with orderNumber {order['orderNumber']} already exists")
+    if not (order.get('customerNumber', None)):
+        return print("Order must have a customerNumber")
     insert_query = """INSERT INTO orders (orderNumber, 
                                           orderDate, 
                                           requiredDate, 
