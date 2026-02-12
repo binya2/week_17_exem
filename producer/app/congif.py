@@ -23,6 +23,6 @@ class KafkaProducerConfig(BaseSettings):
 kafka_producer_config = KafkaProducerConfig()
 
 class MongoConfig(BaseSettings):
-    MONGODB_URL: str = Field(default="mongodb://localhost:27017", serialization_alias="MONGO_URI")
+    MONGODB_URL: str = Field(default="mongodb://localhost:27017",)
 
 mongo_config = MongoConfig()

@@ -12,3 +12,10 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
+class MysqlConfig(BaseSettings):
+    MYSQL_HOST: str = Field(default="localhost", serialization_alias="host")
+    MYSQL_PORT: int = Field(default=3306, serialization_alias="port")
+    MYSQL_USER: str = Field(default="root", serialization_alias="user")
+    MYSQL_ROOT_PASSWORD: str = Field(default="root_password", serialization_alias="password")
+
+mysql_config = MysqlConfig()
